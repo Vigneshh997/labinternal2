@@ -1,17 +1,35 @@
-pipeline{
+
+pipeline {
     agent any
-    stages{
-        stage("build"){
-            steps{
-                bat "mvn clean"
-                bat "mvn install"
+
+    tools {
+        maven 'MAVEN_HOME'
+    }
+
+    stages {
+
+        stage('git repo & clean') {
+            steps {
+                bat 'mvn clean'
             }
         }
-        stage("test"){
-            steps{
-                bat "mvn test"
+
+        stage('install') {
+            steps {
+                bat 'mvn install'
             }
         }
-        
+
+        stage('test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+
+        stage('package') {
+            steps {
+                bat 'mvn package'
+            }
+        }
     }
 }
